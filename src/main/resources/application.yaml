@@ -1,0 +1,52 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    contextPath: /api/
+endpoints:
+  health:
+    sensitive: false
+#https://manage.auth0.com/dashboard/us/hvac-guardian/apis/60c6695c7cf6aa0040873f20/settings
+auth0:
+  audience: ${API_IDENTIFIER:https://hvac-guardian.com/api}
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI:https://hvac-guardian.us.auth0.com/}
+    user:
+      name: admin
+      password: password
+
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://127.0.0.1:27017/dinamic_ip}
+#   jackson:
+#     date-format: com.hvacguardian.RFC3339DateFormat
+#     serialization:
+#       WRITE_DATES_AS_TIMESTAMPS: false
+
+springfox:
+  documentation:
+    open-api:
+      v3:
+        path: /api-docs
+
+
+logging:
+  level:
+    org:
+      springframework:
+        data: debug
+  #.=error
+
+#Actuator
+management:
+  endpoints:
+    enabled-by-default: false
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
