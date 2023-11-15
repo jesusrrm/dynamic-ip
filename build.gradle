@@ -32,6 +32,11 @@ dependencies {
 
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder-jammy-tiny:latest'
+	dockerfile {
+	        // Specify additional instructions in the Dockerfile
+	        // from 'paketobuildpacks/run:base-cnb'
+	        label 'org.opencontainers.image.description', 'Image of service to handle dynamic IP to update Cloudflare DNS'
+    }
 }
 
 tasks.named('test') {
