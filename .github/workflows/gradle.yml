@@ -50,7 +50,7 @@ jobs:
     - name: Build with Gradle
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
-        arguments: bootBuildImage
+        arguments: bootBuildImage --imageName=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
     - name: Build and push Docker image
       id: build-and-push
@@ -69,6 +69,6 @@ jobs:
           tag_name=${original_sha:0:7}  
         fi
         echo "IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$tag_name"
-        docker tag ghcr.io/${{ github.repository }}:$tag_name ghcr.io/${{ github.repository }}:latest
+        docker tag ghcr.io/${{ github.repository }}:latest ghcr.io/${{ github.repository }}:$tag_name
         docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$tag_name
         docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
